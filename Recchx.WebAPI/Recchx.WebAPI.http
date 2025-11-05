@@ -1,0 +1,6 @@
+@Recchx.WebAPI_HostAddress = http://localhost:5259
+
+GET {{Recchx.WebAPI_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
