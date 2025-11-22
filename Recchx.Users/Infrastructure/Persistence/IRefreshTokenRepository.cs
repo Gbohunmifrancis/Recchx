@@ -11,5 +11,6 @@ public interface IRefreshTokenRepository
     Task UpdateAsync(RefreshToken refreshToken, CancellationToken cancellationToken = default);
     Task RevokeAllUserTokensAsync(Guid userId, CancellationToken cancellationToken = default);
     Task RevokeTokenAsync(string token, CancellationToken cancellationToken = default);
+    Task<int> DeleteOldTokensAsync(int olderThanDays, CancellationToken cancellationToken = default);
     Task SaveChangesAsync(CancellationToken cancellationToken = default);
 }

@@ -9,7 +9,10 @@ using Recchx.Users.Infrastructure.Services;
 using Microsoft.EntityFrameworkCore;
 using Recchx.WebAPI.Infrastructure.Persistence;
 using Recchx.WebAPI.Middleware;
+using Recchx.WebAPI.Jobs;
 using Serilog;
+using Hangfire;
+using Hangfire.PostgreSql;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -104,6 +107,24 @@ builder.Services.AddScoped<IPasswordHasher, PasswordHasher>();
 builder.Services.AddScoped<IJwtTokenGenerator, JwtTokenGenerator>();
 builder.Services.AddScoped<IDeviceFingerprintService, DeviceFingerprintService>();
 
+// Register Background Jobs
+builder.Services.AddScoped<TokenCleanupJob>();
+
+// Add Hangfire
+builder.Services.AddHangfire(configuration => configuration
+    .SetDataCompatibilityLevel(CompatibilityLevel.Version_180)
+    .UseSimpleAssemblyNameTypeSerializer()
+    .UseRecommendedSerializerSettings()
+    .UsePostgreSqlStorage(options =>
+    {
+        options.UseNpgsqlConnection(builder.Configuration.GetConnectionString("DefaultConnection")!);
+    }));
+
+builder.Services.AddHangfireServer(options =>
+{
+    options.WorkerCount = 1;
+});
+
 // Add CORS
 builder.Services.AddCors(options =>
 {
@@ -138,6 +159,18 @@ app.UseCors("AllowAll");
 app.UseAuthentication();
 app.UseTokenValidation();
 app.UseAuthorization();
+
+// Add Hangfire Dashboard
+app.MapHangfireDashboard("/hangfire", new DashboardOptions
+{
+    Authorization = new[] { new HangfireDashboardAuthorizationFilter() }
+});
+
+// Schedule recurring jobs
+RecurringJob.AddOrUpdate<TokenCleanupJob>(
+    "token-cleanup",
+    job => job.CleanupOldTokensAndSessions(),
+    Cron.Daily(2)); // Run daily at 2 AM
 
 app.MapControllers();
 

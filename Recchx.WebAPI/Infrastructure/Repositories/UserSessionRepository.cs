@@ -68,6 +68,19 @@ public class UserSessionRepository : IUserSessionRepository
         }
     }
 
+    public async Task<int> DeleteOldSessionsAsync(int olderThanDays, CancellationToken cancellationToken = default)
+    {
+        var cutoffDate = DateTime.UtcNow.AddDays(-olderThanDays);
+        
+        var oldSessions = await _context.UserSessions
+            .Where(s => (!s.IsActive && s.RevokedAt < cutoffDate) || 
+                       (s.IsActive && s.ExpiresAt < cutoffDate))
+            .ToListAsync(cancellationToken);
+
+        _context.UserSessions.RemoveRange(oldSessions);
+        return oldSessions.Count;
+    }
+
     public async Task SaveChangesAsync(CancellationToken cancellationToken = default)
     {
         await _context.SaveChangesAsync(cancellationToken);

@@ -69,6 +69,19 @@ public class RefreshTokenRepository : IRefreshTokenRepository
         }
     }
 
+    public async Task<int> DeleteOldTokensAsync(int olderThanDays, CancellationToken cancellationToken = default)
+    {
+        var cutoffDate = DateTime.UtcNow.AddDays(-olderThanDays);
+        
+        var oldTokens = await _context.RefreshTokens
+            .Where(rt => (rt.IsRevoked && rt.RevokedAt < cutoffDate) || 
+                        (!rt.IsRevoked && rt.ExpiresAt < cutoffDate))
+            .ToListAsync(cancellationToken);
+
+        _context.RefreshTokens.RemoveRange(oldTokens);
+        return oldTokens.Count;
+    }
+
     public async Task SaveChangesAsync(CancellationToken cancellationToken = default)
     {
         await _context.SaveChangesAsync(cancellationToken);

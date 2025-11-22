@@ -11,5 +11,6 @@ public interface IUserSessionRepository
     Task UpdateAsync(UserSession session, CancellationToken cancellationToken = default);
     Task RevokeAllUserSessionsAsync(Guid userId, CancellationToken cancellationToken = default);
     Task RevokeSessionAsync(string sessionId, CancellationToken cancellationToken = default);
+    Task<int> DeleteOldSessionsAsync(int olderThanDays, CancellationToken cancellationToken = default);
     Task SaveChangesAsync(CancellationToken cancellationToken = default);
 }
