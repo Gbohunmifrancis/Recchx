@@ -3,3 +3,15 @@ obj/
 /packages/
 riderModule.iml
 /_ReSharper.Caches/
+
+# App Settings (contains sensitive data)
+**/appsettings.json
+**/appsettings.*.json
+
+# Project documentation files (exclude from repo)
+PHASE_1_COMPLETE.md
+PROJECT_EXECUTION_PLAN.md
+
+# Logs
+**/Logs/
+*.log
