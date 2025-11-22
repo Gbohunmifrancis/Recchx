@@ -107,3 +107,150 @@ System.Net.Sockets.SocketException (11001): No such host is known.
 2025-11-22 23:18:42.514 +01:00 [WRN] Failed to determine the https port for redirect.
 2025-11-22 23:18:44.371 +01:00 [WRN] Sensitive data logging is enabled. Log entries and exception messages may include sensitive application data; this mode should only be enabled during development.
 2025-11-22 23:21:20.427 +01:00 [INF] Application is shutting down...
+2025-11-22 23:30:44.159 +01:00 [INF] Start installing Hangfire SQL objects...
+2025-11-22 23:30:59.862 +01:00 [INF] Hangfire SQL objects installed.
+2025-11-22 23:31:05.533 +01:00 [INF] Starting Recchx API
+2025-11-22 23:31:05.731 +01:00 [INF] Now listening on: http://localhost:5259
+2025-11-22 23:31:05.741 +01:00 [INF] Starting Hangfire Server using job storage: 'PostgreSQL Server: Host: cfcojm7sp9tfip.cluster-czz5s0kz4scl.eu-west-1.rds.amazonaws.com, DB: d565ia46frdbod, Schema: hangfire'
+2025-11-22 23:31:05.744 +01:00 [INF] Using the following options for PostgreSQL job storage:
+2025-11-22 23:31:05.747 +01:00 [INF]     Queue poll interval: 00:00:15.
+2025-11-22 23:31:05.749 +01:00 [INF]     Invisibility timeout: 00:30:00.
+2025-11-22 23:31:05.751 +01:00 [INF]     Use sliding invisibility timeout: False.
+2025-11-22 23:31:05.753 +01:00 [INF] Using the following options for Hangfire Server:
+    Worker count: 1
+    Listening queues: 'default'
+    Shutdown timeout: 00:00:15
+    Schedule polling interval: 00:00:15
+2025-11-22 23:31:05.891 +01:00 [INF] Application started. Press Ctrl+C to shut down.
+2025-11-22 23:31:05.895 +01:00 [INF] Hosting environment: Development
+2025-11-22 23:31:05.898 +01:00 [INF] Content root path: C:\Users\FRANCIS GBOHUNMI\Desktop\PROJECTS\Recchx\Recchx\Recchx.WebAPI
+2025-11-22 23:31:06.131 +01:00 [INF] Server samsung-pc:13280:214fb883 successfully announced in 239.197 ms
+2025-11-22 23:31:06.145 +01:00 [INF] Server samsung-pc:13280:214fb883 is starting the registered dispatchers: ServerWatchdog, ServerJobCancellationWatcher, ExpirationManager, CountersAggregator, Worker, DelayedJobScheduler, RecurringJobScheduler...
+2025-11-22 23:31:06.165 +01:00 [INF] Server samsung-pc:13280:214fb883 all the dispatchers started
+2025-11-22 23:39:34.768 +01:00 [WRN] Failed to determine the https port for redirect.
+2025-11-22 23:39:50.443 +01:00 [WRN] Server samsung-pc:13280:214fb883 encountered an exception while sending heartbeat
+System.Net.Sockets.SocketException (0x00002AF9): No such host is known.
+   at System.Net.Dns.GetHostEntryOrAddressesCore(String hostName, Boolean justAddresses, AddressFamily addressFamily, Nullable`1 startingTimestamp)
+   at System.Net.Dns.GetHostAddresses(String hostNameOrAddress, AddressFamily family)
+   at Npgsql.Internal.NpgsqlConnector.Connect(NpgsqlTimeout timeout)
+   at Npgsql.Internal.NpgsqlConnector.RawOpen(SslMode sslMode, NpgsqlTimeout timeout, Boolean async, CancellationToken cancellationToken, Boolean isFirstAttempt)
+   at Npgsql.Internal.NpgsqlConnector.<Open>g__OpenCore|213_1(NpgsqlConnector conn, SslMode sslMode, NpgsqlTimeout timeout, Boolean async, CancellationToken cancellationToken, Boolean isFirstAttempt)
+   at Npgsql.Internal.NpgsqlConnector.Open(NpgsqlTimeout timeout, Boolean async, CancellationToken cancellationToken)
+   at Npgsql.PoolingDataSource.OpenNewConnector(NpgsqlConnection conn, NpgsqlTimeout timeout, Boolean async, CancellationToken cancellationToken)
+   at Npgsql.PoolingDataSource.<Get>g__RentAsync|34_0(NpgsqlConnection conn, NpgsqlTimeout timeout, Boolean async, CancellationToken cancellationToken)
+   at Npgsql.NpgsqlConnection.<Open>g__OpenAsync|42_0(Boolean async, CancellationToken cancellationToken)
+   at Hangfire.PostgreSql.PostgreSqlStorage.CreateAndOpenConnection()
+   at Hangfire.PostgreSql.PostgreSqlStorage.UseConnection[T](DbConnection dedicatedConnection, Func`2 func)
+   at Hangfire.PostgreSql.PostgreSqlConnection.Heartbeat(String serverId)
+   at Hangfire.Server.ServerHeartbeatProcess.Execute(BackgroundProcessContext context) in C:\projects\hangfire-525\src\Hangfire.Core\Server\ServerHeartbeatProcess.cs:line 50
+2025-11-22 23:40:06.459 +01:00 [ERR] Execution DelayedJobScheduler is in the Failed state now due to an exception, execution will be retried no more than in 00:00:04
+Npgsql.NpgsqlException (0x80004005): Exception while reading from stream
+ ---> System.TimeoutException: Timeout during reading attempt
+   at Npgsql.Internal.NpgsqlReadBuffer.<Ensure>g__EnsureLong|55_0(NpgsqlReadBuffer buffer, Int32 count, Boolean async, Boolean readingNotifications)
+   at System.Runtime.CompilerServices.PoolingAsyncValueTaskMethodBuilder`1.StateMachineBox`1.System.Threading.Tasks.Sources.IValueTaskSource.GetResult(Int16 token)
+   at Npgsql.Internal.NpgsqlConnector.RawOpen(SslMode sslMode, NpgsqlTimeout timeout, Boolean async, CancellationToken cancellationToken, Boolean isFirstAttempt)
+   at Npgsql.Internal.NpgsqlConnector.<Open>g__OpenCore|213_1(NpgsqlConnector conn, SslMode sslMode, NpgsqlTimeout timeout, Boolean async, CancellationToken cancellationToken, Boolean isFirstAttempt)
+   at Npgsql.Internal.NpgsqlConnector.Open(NpgsqlTimeout timeout, Boolean async, CancellationToken cancellationToken)
+   at Npgsql.PoolingDataSource.OpenNewConnector(NpgsqlConnection conn, NpgsqlTimeout timeout, Boolean async, CancellationToken cancellationToken)
+   at Npgsql.PoolingDataSource.<Get>g__RentAsync|34_0(NpgsqlConnection conn, NpgsqlTimeout timeout, Boolean async, CancellationToken cancellationToken)
+   at Npgsql.NpgsqlConnection.<Open>g__OpenAsync|42_0(Boolean async, CancellationToken cancellationToken)
+   at Hangfire.PostgreSql.PostgreSqlStorage.CreateAndOpenConnection()
+   at Hangfire.PostgreSql.PostgreSqlConnection.AcquireLock(String resource, TimeSpan timeout)
+   at Hangfire.Server.DelayedJobScheduler.UseConnectionDistributedLock[T](JobStorage storage, Func`2 action) in C:\projects\hangfire-525\src\Hangfire.Core\Server\DelayedJobScheduler.cs:line 409
+   at Hangfire.Server.DelayedJobScheduler.EnqueueNextScheduledJobs(BackgroundProcessContext context) in C:\projects\hangfire-525\src\Hangfire.Core\Server\DelayedJobScheduler.cs:line 165
+   at Hangfire.Server.DelayedJobScheduler.Execute(BackgroundProcessContext context) in C:\projects\hangfire-525\src\Hangfire.Core\Server\DelayedJobScheduler.cs:line 146
+   at Hangfire.Server.BackgroundProcessDispatcherBuilder.ExecuteProcess(Guid executionId, Object state) in C:\projects\hangfire-525\src\Hangfire.Core\Server\BackgroundProcessDispatcherBuilder.cs:line 82
+   at Hangfire.Processing.BackgroundExecution.Run(Action`2 callback, Object state) in C:\projects\hangfire-525\src\Hangfire.Core\Processing\BackgroundExecution.cs:line 118
+2025-11-22 23:40:06.459 +01:00 [ERR] Execution RecurringJobScheduler is in the Failed state now due to an exception, execution will be retried no more than in 00:00:04
+Npgsql.NpgsqlException (0x80004005): Exception while reading from stream
+ ---> System.TimeoutException: Timeout during reading attempt
+   at Npgsql.Internal.NpgsqlReadBuffer.<Ensure>g__EnsureLong|55_0(NpgsqlReadBuffer buffer, Int32 count, Boolean async, Boolean readingNotifications)
+   at System.Runtime.CompilerServices.PoolingAsyncValueTaskMethodBuilder`1.StateMachineBox`1.System.Threading.Tasks.Sources.IValueTaskSource.GetResult(Int16 token)
+   at Npgsql.Internal.NpgsqlConnector.RawOpen(SslMode sslMode, NpgsqlTimeout timeout, Boolean async, CancellationToken cancellationToken, Boolean isFirstAttempt)
+   at Npgsql.Internal.NpgsqlConnector.<Open>g__OpenCore|213_1(NpgsqlConnector conn, SslMode sslMode, NpgsqlTimeout timeout, Boolean async, CancellationToken cancellationToken, Boolean isFirstAttempt)
+   at Npgsql.Internal.NpgsqlConnector.Open(NpgsqlTimeout timeout, Boolean async, CancellationToken cancellationToken)
+   at Npgsql.PoolingDataSource.OpenNewConnector(NpgsqlConnection conn, NpgsqlTimeout timeout, Boolean async, CancellationToken cancellationToken)
+   at Npgsql.PoolingDataSource.<Get>g__RentAsync|34_0(NpgsqlConnection conn, NpgsqlTimeout timeout, Boolean async, CancellationToken cancellationToken)
+   at Npgsql.NpgsqlConnection.<Open>g__OpenAsync|42_0(Boolean async, CancellationToken cancellationToken)
+   at Hangfire.PostgreSql.PostgreSqlStorage.CreateAndOpenConnection()
+   at Hangfire.PostgreSql.PostgreSqlConnection.AcquireLock(String resource, TimeSpan timeout)
+   at Hangfire.Server.RecurringJobScheduler.UseConnectionDistributedLock[T](JobStorage storage, Func`2 action) in C:\projects\hangfire-525\src\Hangfire.Core\Server\RecurringJobScheduler.cs:line 423
+   at Hangfire.Server.RecurringJobScheduler.EnqueueNextRecurringJobs(BackgroundProcessContext context) in C:\projects\hangfire-525\src\Hangfire.Core\Server\RecurringJobScheduler.cs:line 203
+   at Hangfire.Server.RecurringJobScheduler.Execute(BackgroundProcessContext context) in C:\projects\hangfire-525\src\Hangfire.Core\Server\RecurringJobScheduler.cs:line 176
+   at Hangfire.Server.BackgroundProcessDispatcherBuilder.ExecuteProcess(Guid executionId, Object state) in C:\projects\hangfire-525\src\Hangfire.Core\Server\BackgroundProcessDispatcherBuilder.cs:line 82
+   at Hangfire.Processing.BackgroundExecution.Run(Action`2 callback, Object state) in C:\projects\hangfire-525\src\Hangfire.Core\Processing\BackgroundExecution.cs:line 118
+2025-11-22 23:40:07.658 +01:00 [ERR] An unhandled exception occurred
+Npgsql.NpgsqlException (0x80004005): Exception while performing SSL handshake
+ ---> System.IO.IOException: Unable to read data from the transport connection: A connection attempt failed because the connected party did not properly respond after a period of time, or established connection failed because connected host has failed to respond..
+ ---> System.Net.Sockets.SocketException (10060): A connection attempt failed because the connected party did not properly respond after a period of time, or established connection failed because connected host has failed to respond.
+   at System.Net.Sockets.NetworkStream.Read(Span`1 buffer)
+   --- End of inner exception stack trace ---
+   at System.Net.Sockets.NetworkStream.Read(Span`1 buffer)
+   at System.Net.Security.SslStream.EnsureFullTlsFrameAsync[TIOAdapter](CancellationToken cancellationToken, Int32 estimatedSize)
+   at System.Runtime.CompilerServices.PoolingAsyncValueTaskMethodBuilder`1.StateMachineBox`1.System.Threading.Tasks.Sources.IValueTaskSource<TResult>.GetResult(Int16 token)
+   at System.Net.Security.SslStream.ReceiveHandshakeFrameAsync[TIOAdapter](CancellationToken cancellationToken)
+   at System.Net.Security.SslStream.ForceAuthenticationAsync[TIOAdapter](Boolean receiveFirst, Byte[] reAuthenticationData, CancellationToken cancellationToken)
+   at System.Net.Security.SslStream.AuthenticateAsClient(SslClientAuthenticationOptions sslClientAuthenticationOptions)
+   at Npgsql.Internal.NpgsqlConnector.NegotiateEncryption(SslMode sslMode, NpgsqlTimeout timeout, Boolean async, Boolean isFirstAttempt)
+   at Npgsql.Internal.NpgsqlConnector.NegotiateEncryption(SslMode sslMode, NpgsqlTimeout timeout, Boolean async, Boolean isFirstAttempt)
+   at Npgsql.Internal.NpgsqlConnector.RawOpen(SslMode sslMode, NpgsqlTimeout timeout, Boolean async, CancellationToken cancellationToken, Boolean isFirstAttempt)
+   at Npgsql.Internal.NpgsqlConnector.<Open>g__OpenCore|213_1(NpgsqlConnector conn, SslMode sslMode, NpgsqlTimeout timeout, Boolean async, CancellationToken cancellationToken, Boolean isFirstAttempt)
+   at Npgsql.Internal.NpgsqlConnector.Open(NpgsqlTimeout timeout, Boolean async, CancellationToken cancellationToken)
+   at Npgsql.PoolingDataSource.OpenNewConnector(NpgsqlConnection conn, NpgsqlTimeout timeout, Boolean async, CancellationToken cancellationToken)
+   at Npgsql.PoolingDataSource.<Get>g__RentAsync|34_0(NpgsqlConnection conn, NpgsqlTimeout timeout, Boolean async, CancellationToken cancellationToken)
+   at Npgsql.NpgsqlConnection.<Open>g__OpenAsync|42_0(Boolean async, CancellationToken cancellationToken)
+   at Hangfire.PostgreSql.PostgreSqlStorage.CreateAndOpenConnection()
+   at Hangfire.PostgreSql.PostgreSqlStorage.UseConnection[T](DbConnection dedicatedConnection, Func`2 func)
+   at Hangfire.PostgreSql.PostgreSqlJobQueueMonitoringApi.GetQueues()
+   at Hangfire.PostgreSql.PostgreSqlMonitoringApi.<>c.<GetStatistics>b__24_1(IPersistentJobQueueProvider x)
+   at System.Linq.Enumerable.SelectManySingleSelectorIterator`2.GetCount(Boolean onlyIfCheap)
+   at Hangfire.PostgreSql.PostgreSqlMonitoringApi.<GetStatistics>b__24_0(IDbConnection connection)
+   at Hangfire.PostgreSql.PostgreSqlStorage.UseConnection[T](DbConnection dedicatedConnection, Func`2 func)
+   at Hangfire.PostgreSql.PostgreSqlMonitoringApi.UseConnection[T](Func`2 func)
+   at Hangfire.PostgreSql.PostgreSqlMonitoringApi.GetStatistics()
+   at Hangfire.Dashboard.RazorPage.<Assign>b__51_0() in C:\projects\hangfire-525\src\Hangfire.Core\Dashboard\RazorPage.cs:line 124
+   at System.Lazy`1.ViaFactory(LazyThreadSafetyMode mode)
+   at System.Lazy`1.ExecutionAndPublication(LazyHelper executionAndPublication, Boolean useDefaultConstructor)
+   at System.Lazy`1.CreateValue()
+   at Hangfire.Dashboard.RazorPage.get_Statistics() in C:\projects\hangfire-525\src\Hangfire.Core\Dashboard\RazorPage.cs:line 80
+   at Hangfire.Dashboard.Pages.HomePage.Execute() in C:\projects\hangfire-525\src\Hangfire.Core\Dashboard\Pages\HomePage.cshtml:line 56
+   at Hangfire.Dashboard.RazorPage.TransformText(String body) in C:\projects\hangfire-525\src\Hangfire.Core\Dashboard\RazorPage.cs:line 179
+   at Hangfire.Dashboard.RazorPage.ToString() in C:\projects\hangfire-525\src\Hangfire.Core\Dashboard\RazorPage.cs:line 103
+   at Hangfire.Dashboard.RazorPageDispatcher.Dispatch(DashboardContext context) in C:\projects\hangfire-525\src\Hangfire.Core\Dashboard\RazorPageDispatcher.cs:line 38
+   at Hangfire.Dashboard.AspNetCoreDashboardMiddleware.Invoke(HttpContext httpContext) in C:\projects\hangfire-525\src\Hangfire.AspNetCore\Dashboard\AspNetCoreDashboardMiddleware.cs:line 99
+   at Microsoft.AspNetCore.Builder.Extensions.UsePathBaseMiddleware.InvokeCore(HttpContext context, PathString matchedPath, PathString remainingPath)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Recchx.WebAPI.Middleware.TokenValidationMiddleware.InvokeAsync(HttpContext context, IUserSessionRepository sessionRepository) in C:\Users\FRANCIS GBOHUNMI\Desktop\PROJECTS\Recchx\Recchx\Recchx.WebAPI\Middleware\TokenValidationMiddleware.cs:line 60
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
+   at Swashbuckle.AspNetCore.SwaggerUI.SwaggerUIMiddleware.Invoke(HttpContext httpContext)
+   at Swashbuckle.AspNetCore.Swagger.SwaggerMiddleware.Invoke(HttpContext httpContext, ISwaggerProvider swaggerProvider)
+   at Swashbuckle.AspNetCore.SwaggerUI.SwaggerUIMiddleware.Invoke(HttpContext httpContext)
+   at Swashbuckle.AspNetCore.Swagger.SwaggerMiddleware.Invoke(HttpContext httpContext, ISwaggerProvider swaggerProvider)
+   at Recchx.WebAPI.Middleware.ExceptionHandlingMiddleware.InvokeAsync(HttpContext context) in C:\Users\FRANCIS GBOHUNMI\Desktop\PROJECTS\Recchx\Recchx\Recchx.WebAPI\Middleware\ExceptionHandlingMiddleware.cs:line 22
+2025-11-22 23:40:31.699 +01:00 [WRN] Server samsung-pc:13280:214fb883 encountered an exception while sending heartbeat
+System.Net.Sockets.SocketException (0x00002AF9): No such host is known.
+   at System.Net.Dns.GetHostEntryOrAddressesCore(String hostName, Boolean justAddresses, AddressFamily addressFamily, Nullable`1 startingTimestamp)
+   at System.Net.Dns.GetHostAddresses(String hostNameOrAddress, AddressFamily family)
+   at Npgsql.Internal.NpgsqlConnector.Connect(NpgsqlTimeout timeout)
+   at Npgsql.Internal.NpgsqlConnector.RawOpen(SslMode sslMode, NpgsqlTimeout timeout, Boolean async, CancellationToken cancellationToken, Boolean isFirstAttempt)
+   at Npgsql.Internal.NpgsqlConnector.<Open>g__OpenCore|213_1(NpgsqlConnector conn, SslMode sslMode, NpgsqlTimeout timeout, Boolean async, CancellationToken cancellationToken, Boolean isFirstAttempt)
+   at Npgsql.Internal.NpgsqlConnector.Open(NpgsqlTimeout timeout, Boolean async, CancellationToken cancellationToken)
+   at Npgsql.PoolingDataSource.OpenNewConnector(NpgsqlConnection conn, NpgsqlTimeout timeout, Boolean async, CancellationToken cancellationToken)
+   at Npgsql.PoolingDataSource.<Get>g__RentAsync|34_0(NpgsqlConnection conn, NpgsqlTimeout timeout, Boolean async, CancellationToken cancellationToken)
+   at Npgsql.NpgsqlConnection.<Open>g__OpenAsync|42_0(Boolean async, CancellationToken cancellationToken)
+   at Hangfire.PostgreSql.PostgreSqlStorage.CreateAndOpenConnection()
+   at Hangfire.PostgreSql.PostgreSqlStorage.UseConnection[T](DbConnection dedicatedConnection, Func`2 func)
+   at Hangfire.PostgreSql.PostgreSqlConnection.Heartbeat(String serverId)
+   at Hangfire.Server.ServerHeartbeatProcess.Execute(BackgroundProcessContext context) in C:\projects\hangfire-525\src\Hangfire.Core\Server\ServerHeartbeatProcess.cs:line 50
+2025-11-22 23:41:01.913 +01:00 [INF] Server samsung-pc:13280:214fb883 is now able to continue sending heartbeats
+2025-11-22 23:41:02.260 +01:00 [INF] Execution DelayedJobScheduler recovered from the Failed state after 00:00:55.7650603 and is in the Running state now
+2025-11-22 23:41:02.363 +01:00 [INF] Execution RecurringJobScheduler recovered from the Failed state after 00:00:55.8446316 and is in the Running state now
+2025-11-22 23:42:32.926 +01:00 [INF] Starting token and session cleanup job...
+2025-11-22 23:42:33.982 +01:00 [WRN] Sensitive data logging is enabled. Log entries and exception messages may include sensitive application data; this mode should only be enabled during development.
+2025-11-22 23:42:35.345 +01:00 [INF] Token cleanup completed. Deleted 0 tokens and 0 sessions.
+2025-11-22 23:42:37.630 +01:00 [INF] Execution Worker recovered from the Faulted state after 00:02:13.3721318 and is in the Running state now
+2025-11-22 23:50:14.896 +01:00 [INF] Server samsung-pc:13280:214fb883 caught stopping signal...
+2025-11-22 23:50:14.900 +01:00 [INF] Application is shutting down...
+2025-11-22 23:50:14.905 +01:00 [INF] Server samsung-pc:13280:214fb883 All dispatchers stopped
+2025-11-22 23:50:15.078 +01:00 [INF] Server samsung-pc:13280:214fb883 successfully reported itself as stopped in 160.5885 ms
+2025-11-22 23:50:15.082 +01:00 [INF] Server samsung-pc:13280:214fb883 has been stopped in total 182.7584 ms
