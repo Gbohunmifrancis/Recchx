@@ -16,9 +16,11 @@ using Hangfire.PostgreSql;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Configure Serilog
+// Configure Serilog - Console output for development
 Log.Logger = new LoggerConfiguration()
-    .ReadFrom.Configuration(builder.Configuration)
+    .MinimumLevel.Information()
+    .WriteTo.Console()
+    .WriteTo.File("Logs/log-.txt", rollingInterval: RollingInterval.Day)
     .Enrich.FromLogContext()
     .CreateLogger();
 
@@ -62,11 +64,21 @@ builder.Services.AddSwaggerGen(options =>
     });
 });
 
-// Add DbContext with PostgreSQL
+// Add DbContext - Use In-Memory database for Development, PostgreSQL for Production
 builder.Services.AddDbContext<RecchxDbContext>(options =>
 {
-    options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection"));
-    options.EnableSensitiveDataLogging(builder.Environment.IsDevelopment());
+    if (builder.Environment.IsDevelopment())
+    {
+        // Use in-memory database for fast local development without external dependencies
+        options.UseInMemoryDatabase("RecchxDevDb");
+        options.EnableSensitiveDataLogging(true);
+    }
+    else
+    {
+        // Use PostgreSQL for Production
+        var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
+        options.UseNpgsql(connectionString);
+    }
 });
 
 // Add JWT Authentication
@@ -110,20 +122,23 @@ builder.Services.AddScoped<IDeviceFingerprintService, DeviceFingerprintService>(
 // Register Background Jobs
 builder.Services.AddScoped<TokenCleanupJob>();
 
-// Add Hangfire
-builder.Services.AddHangfire(configuration => configuration
-    .SetDataCompatibilityLevel(CompatibilityLevel.Version_180)
-    .UseSimpleAssemblyNameTypeSerializer()
-    .UseRecommendedSerializerSettings()
-    .UsePostgreSqlStorage(options =>
-    {
-        options.UseNpgsqlConnection(builder.Configuration.GetConnectionString("DefaultConnection")!);
-    }));
-
-builder.Services.AddHangfireServer(options =>
+// Add Hangfire (only in Production to avoid slow AWS RDS connection during local development)
+if (!builder.Environment.IsDevelopment())
 {
-    options.WorkerCount = 1;
-});
+    builder.Services.AddHangfire(configuration => configuration
+        .SetDataCompatibilityLevel(CompatibilityLevel.Version_180)
+        .UseSimpleAssemblyNameTypeSerializer()
+        .UseRecommendedSerializerSettings()
+        .UsePostgreSqlStorage(options =>
+        {
+            options.UseNpgsqlConnection(builder.Configuration.GetConnectionString("DefaultConnection")!);
+        }));
+
+    builder.Services.AddHangfireServer(options =>
+    {
+        options.WorkerCount = 1;
+    });
+}
 
 // Add CORS
 builder.Services.AddCors(options =>
@@ -137,8 +152,12 @@ builder.Services.AddCors(options =>
 });
 
 // Add Health Checks
-builder.Services.AddHealthChecks()
-    .AddDbContextCheck<RecchxDbContext>("database");
+builder.Services.AddHealthChecks();
+// Database health check disabled in Development for faster startup
+if (!builder.Environment.IsDevelopment())
+{
+    builder.Services.AddHealthChecks().AddDbContextCheck<RecchxDbContext>("database");
+}
 
 var app = builder.Build();
 
@@ -160,17 +179,20 @@ app.UseAuthentication();
 app.UseTokenValidation();
 app.UseAuthorization();
 
-// Add Hangfire Dashboard
-app.MapHangfireDashboard("/hangfire", new DashboardOptions
+// Add Hangfire Dashboard (only in Production)
+if (!app.Environment.IsDevelopment())
 {
-    Authorization = new[] { new HangfireDashboardAuthorizationFilter() }
-});
+    app.MapHangfireDashboard("/hangfire", new DashboardOptions
+    {
+        Authorization = new[] { new HangfireDashboardAuthorizationFilter() }
+    });
 
-// Schedule recurring jobs
-RecurringJob.AddOrUpdate<TokenCleanupJob>(
-    "token-cleanup",
-    job => job.CleanupOldTokensAndSessions(),
-    Cron.Daily(2)); // Run daily at 2 AM
+    // Schedule recurring jobs
+    RecurringJob.AddOrUpdate<TokenCleanupJob>(
+        "token-cleanup",
+        job => job.CleanupOldTokensAndSessions(),
+        Cron.Daily(2)); // Run daily at 2 AM
+}
 
 app.MapControllers();
 
